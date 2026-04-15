@@ -1,0 +1,5 @@
+<resources>
+    <!-- Languages -->
+    <string name="search">Search</string>
+    <string name="list_items_title_format">List (%d items)</string>
+</resources>
