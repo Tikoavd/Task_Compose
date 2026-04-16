@@ -8,4 +8,5 @@ sealed interface HomeIntent : MviIntent {
 
     data class Search(val query: String) : HomeIntent
     data object GetListStats : HomeIntent
+    data class OnCategoryChange(val categoryId: Int) : HomeIntent
 }

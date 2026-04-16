@@ -23,16 +23,16 @@ class GetProductsUseCaseTest {
     private val useCase = GetProductsUseCaseImpl(repository, dispatchers)
 
     private val products = listOf(
-        ProductUI(1, "", "Apple Juice", ""),
-        ProductUI(2, "", "Orange Soda", ""),
-        ProductUI(3, "", "apple pie", ""),
+        ProductUI(1, 0, "", "Apple Juice", ""),
+        ProductUI(2, 0, "", "Orange Soda", ""),
+        ProductUI(3, 0, "", "apple pie", ""),
     )
 
     @Test
     fun `empty query returns all products`() = runTest {
         every { repository.getProducts() } returns flowOf(products)
 
-        val result = useCase("").toList().first()
+        val result = useCase("", 0).toList().first()
 
         assertEquals(3, result.size)
     }
@@ -41,7 +41,7 @@ class GetProductsUseCaseTest {
     fun `query filters case-insensitively`() = runTest {
         every { repository.getProducts() } returns flowOf(products)
 
-        val result = useCase("apple").toList().first()
+        val result = useCase("apple", 0).toList().first()
 
         assertEquals(2, result.size)
         assertEquals(listOf(products[0], products[2]), result)
@@ -51,7 +51,7 @@ class GetProductsUseCaseTest {
     fun `query with no match returns empty list`() = runTest {
         every { repository.getProducts() } returns flowOf(products)
 
-        val result = useCase("xyz").toList().first()
+        val result = useCase("xyz", 0).toList().first()
 
         assertEquals(emptyList<ProductUI>(), result)
     }
@@ -60,7 +60,7 @@ class GetProductsUseCaseTest {
     fun `uppercase query matches lowercase title`() = runTest {
         every { repository.getProducts() } returns flowOf(products)
 
-        val result = useCase("ORANGE").toList().first()
+        val result = useCase("ORANGE", 0).toList().first()
 
         assertEquals(1, result.size)
         assertEquals(products[1], result[0])

@@ -15,4 +15,5 @@ sealed interface HomeAction : MviAction {
     data class UpdateQuery(val query: String) : HomeAction
     data class UpdateListStats(val listStats: ListStats) : HomeAction
     data object ShowBottomSheetLoading : HomeAction
+    data class ChangeCategoryId(val categoryId: Int) : HomeAction
 }

@@ -16,7 +16,7 @@ class HomeReducerTest {
 
     @Test
     fun `UpdateProducts sets products and clears isLoading`() {
-        val products = mutableStateListOf(ProductUI(1, "img", "Title", "Sub"))
+        val products = mutableStateListOf(ProductUI(1, 0, "img", "Title", "Sub"))
         val state = initialState.copy(isLoading = true)
 
         val result = reducer.reduce(HomeAction.UpdateProducts(products), state)

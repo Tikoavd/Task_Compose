@@ -18,7 +18,7 @@ class GetListStatsUseCaseTest {
     }
     private val useCase = GetListStatsUseCaseImpl(dispatchers)
 
-    private fun product(title: String) = ProductUI(0, "", title, "")
+    private fun product(title: String) = ProductUI(0, 0, "", title, "")
 
     @Test
     fun `empty list returns zero stats`() = runTest {

@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 import org.koin.core.annotation.Factory
 
 interface GetProductsUseCase {
-    operator fun invoke(query: String): Flow<List<ProductUI>>
+    operator fun invoke(query: String, categoryId: Int): Flow<List<ProductUI>>
 }
 
 @Factory
@@ -18,10 +18,14 @@ class GetProductsUseCaseImpl(
     private val homeRepository: HomeRepository,
     private val dispatcherProvider: DispatchersProvider
 ) : GetProductsUseCase {
-    override fun invoke(query: String): Flow<List<ProductUI>> = homeRepository.getProducts()
-        .flowOn(dispatcherProvider.io)
-        .map { list ->
-            list.filter { it.title.lowercase().contains(query.lowercase()) }
-        }
-        .flowOn(dispatcherProvider.default)
+    override fun invoke(query: String, categoryId: Int): Flow<List<ProductUI>> =
+        homeRepository.getProducts()
+            .flowOn(dispatcherProvider.io)
+            .map { list ->
+                list.filter {
+                    it.title.lowercase().contains(query.lowercase()) &&
+                            it.categoryId == categoryId
+                }
+            }
+            .flowOn(dispatcherProvider.default)
 }

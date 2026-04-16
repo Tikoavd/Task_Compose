@@ -12,6 +12,7 @@ import com.task_compose.ui_model.ProductUI
 data class HomeState(
     val isLoading: Boolean = true,
     val categories: SnapshotStateList<CategoryUI> = mutableStateListOf(),
+    val categoryId: Int = 0,
     val products: SnapshotStateList<ProductUI> = mutableStateListOf(),
     val query: String = "",
     val listStats: ListStats = ListStats(),

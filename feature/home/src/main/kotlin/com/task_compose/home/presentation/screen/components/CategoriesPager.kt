@@ -16,11 +16,11 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
@@ -29,15 +29,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import com.task_compose.ui_model.CategoryUI
+import com.task_compose.utils.orDefault
 import kotlinx.coroutines.launch
 
 @Composable
 fun CategoriesPager(
     modifier: Modifier = Modifier,
-    categories: SnapshotStateList<CategoryUI>
+    categories: SnapshotStateList<CategoryUI>,
+    onCategoryChange: (Int) -> Unit
 ) {
     val pagerState = rememberPagerState { categories.size }
     val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(pagerState.currentPage) {
+        onCategoryChange(categories.getOrNull(pagerState.currentPage)?.id.orDefault())
+    }
 
     Column(
         modifier = Modifier.fillMaxWidth(),

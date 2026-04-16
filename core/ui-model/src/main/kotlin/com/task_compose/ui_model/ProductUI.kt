@@ -8,6 +8,7 @@ import kotlinx.serialization.InternalSerializationApi
 @Immutable
 data class ProductUI(
     val id: Int,
+    val categoryId: Int,
     val image: String,
     val title: String,
     val subtitle: String
@@ -16,6 +17,7 @@ data class ProductUI(
 @OptIn(InternalSerializationApi::class)
 fun ProductDto.toUI() = ProductUI(
     id = id.orDefault(),
+    categoryId = category?.id.orDefault(),
     image = images.orEmpty().firstOrNull().orEmpty(),
     title = title.orEmpty(),
     subtitle = description.orEmpty()

@@ -59,7 +59,8 @@ fun HomeRoute() {
         HomeScreen(
             state = state,
             onQueryChange = { viewModel.onIntent(HomeIntent.Search(it)) },
-            onFabClick = { viewModel.onIntent(HomeIntent.GetListStats) }
+            onFabClick = { viewModel.onIntent(HomeIntent.GetListStats) },
+            onCategoryChange = { viewModel.onIntent(HomeIntent.OnCategoryChange(it)) }
         )
     }
 }
@@ -70,7 +71,8 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     state: HomeState,
     onQueryChange: (String) -> Unit,
-    onFabClick: () -> Unit
+    onFabClick: () -> Unit,
+    onCategoryChange: (Int) -> Unit
 ) {
     var showBottomSheet by remember { mutableStateOf(false) }
 
@@ -94,7 +96,7 @@ fun HomeScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             item {
-                CategoriesPager(categories = state.categories)
+                CategoriesPager(categories = state.categories, onCategoryChange = onCategoryChange)
             }
 
             stickyHeader {
@@ -120,7 +122,10 @@ fun HomeScreen(
             } else {
                 Text(
                     modifier = Modifier.padding(horizontal = 24.dp),
-                    text = stringResource(R.string.list_items_title_format, state.listStats.totalItems)
+                    text = stringResource(
+                        R.string.list_items_title_format,
+                        state.listStats.totalItems
+                    )
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
